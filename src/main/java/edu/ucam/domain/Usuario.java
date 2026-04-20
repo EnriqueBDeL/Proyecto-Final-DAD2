@@ -1,4 +1,4 @@
-package edu.ucam.resources;
+package edu.ucam.domain;
 
 public class Usuario {
 	
