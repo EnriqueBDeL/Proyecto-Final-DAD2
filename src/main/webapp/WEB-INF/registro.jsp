@@ -11,6 +11,11 @@
 	<h1>Registro</h1>
 	<label>Usuario</label><br>
 	<input type="text" name ="usuario"></input><br>
+<<<<<<< HEAD
+=======
+	<label>Email</label><br>
+	<input type="email" name="email"></input><br>
+>>>>>>> origin/main
 	<label>Contraseña</label><br>
 	<input type="password" name="contraseña"></input><br>
 	<input type="submit"></input><br>
