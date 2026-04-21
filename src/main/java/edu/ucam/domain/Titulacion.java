@@ -2,23 +2,23 @@ package edu.ucam.domain;
 
 public class Titulacion {
 
-	private int idTitulacion;
+	private String idTitulacion;
     private String nombre;
 
     
-    public Titulacion(int idTitulacion, String nombre) {
+    public Titulacion(String idTitulacion, String nombre) {
 		super();
 		this.idTitulacion = idTitulacion;
 		this.nombre = nombre;
 	}
 
 
-	public int getIdTitulacion() {
+	public String getIdTitulacion() {
 		return idTitulacion;
 	}
 
 
-	public void setIdTitulacion(int idTitulacion) {
+	public void setIdTitulacion(String idTitulacion) {
 		this.idTitulacion = idTitulacion;
 	}
 
