@@ -45,20 +45,23 @@ public class ControlTitulaciones extends HttpServlet {
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-				String paramActionId = request.getParameter("ACTION_ID");
-				
-				if (paramActionId == null) {
-					System.out.println("No se introdujo ninguna acción.");
-				}
-				
-				Accion accion = acciones.get(paramActionId);
-				
-				if (accion != null) {
-					accion.ejecutar(request, response);
-				} else {
-					response.getWriter().append("Error: Acción '" + paramActionId + "' no reconocida.");
-				}
-	
+			String paramActionId = request.getParameter("ACTION_ID");
+		    
+		    if (paramActionId == null) {
+		        
+		    	System.out.println("No se introdujo ninguna acción.");
+		    	
+		    } else {
+
+		    	Accion accion = acciones.get(paramActionId);
+		        
+		        if (accion != null) {
+		            accion.ejecutar(request, response);
+		        } else {
+		            response.getWriter().append("Error: Acción '" + paramActionId + "' no reconocida.");
+		        }
+		    }
+		
 	}
 
 	

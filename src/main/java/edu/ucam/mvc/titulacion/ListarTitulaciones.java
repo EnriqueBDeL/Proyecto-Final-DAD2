@@ -49,7 +49,7 @@ public class ListarTitulaciones extends Accion {
         
         try {
             request.setAttribute("TITULACIONES", titulaciones);
-            request.getRequestDispatcher("listartitulaciones.jsp").forward(request, response);
+            request.getRequestDispatcher("formTitulacion.jsp").forward(request, response);
         } catch (ServletException e) {
             e.printStackTrace();
         }

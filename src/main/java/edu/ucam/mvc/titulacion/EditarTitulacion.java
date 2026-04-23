@@ -47,6 +47,7 @@ public class EditarTitulacion extends Accion {
             }
         }
         
-        response.sendRedirect("control?ACTION_ID=LISTAR_TITULACIONES");
+        response.sendRedirect("ControlTitulaciones?ACTION_ID=LISTAR_TITULACIONES");    
+        
     }
 }

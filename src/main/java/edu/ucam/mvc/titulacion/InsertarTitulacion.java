@@ -43,6 +43,6 @@ public class InsertarTitulacion extends Accion {
             e.printStackTrace();
         }
         
-        response.sendRedirect("control?ACTION_ID=LISTAR_TITULACIONES");
-    }
+        response.sendRedirect("ControlTitulaciones?ACTION_ID=LISTAR_TITULACIONES");    
+        }
 }
