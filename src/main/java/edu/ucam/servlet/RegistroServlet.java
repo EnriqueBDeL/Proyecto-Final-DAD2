@@ -1,34 +1,46 @@
 package edu.ucam.servlet;
 
+import java.io.IOException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+
+import edu.ucam.bd.ConexionBD;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.HttpServlet;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-import java.io.IOException;
+import jakarta.servlet.http.*;
 
-/**
- * Servlet implementation class RegistroServlet
- */
 @WebServlet("/RegistroServlet")
 public class RegistroServlet extends HttpServlet {
-	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public RegistroServlet() {
-        super();
-        // TODO Auto-generated constructor stub
+
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+
+        String username = request.getParameter("username");
+        String password = request.getParameter("password");
+
+        try {
+            Connection conexion = ConexionBD.getConexion();
+
+            String sql = "INSERT INTO usuarios(username, password, rol) VALUES (?, ?, ?)";
+            PreparedStatement ps = conexion.prepareStatement(sql);
+
+            ps.setString(1, username);
+            ps.setString(2, password);
+            ps.setString(3, "USER");
+
+            ps.executeUpdate();
+
+            ps.close();
+            conexion.close();
+
+            response.sendRedirect("login.jsp");
+
+        } catch (Exception e) {
+            e.printStackTrace();
+
+            request.setAttribute("error", "No se ha podido registrar el usuario");
+            request.getRequestDispatcher("registro.jsp").forward(request, response);
+        }
     }
-
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
-		String usuario = request.getParameter("usuario");
-	}
-
 }
