@@ -7,6 +7,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-	
+	<!--   Hay que implementar un menu de opciones que al darle a la opcion, ya cargue el listado de lo que sea automaticamente. -->
 </body>
 </html>
