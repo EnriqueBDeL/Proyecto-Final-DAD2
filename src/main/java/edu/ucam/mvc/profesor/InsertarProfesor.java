@@ -1,4 +1,4 @@
-package edu.ucam.mvc.titulacion;
+package edu.ucam.mvc.profesor;
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -13,27 +13,19 @@ import edu.ucam.mvc.Accion;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-public class InsertarTitulacion extends Accion {
+public class InsertarProfesor extends Accion {
 
     @Override
     public void ejecutar(HttpServletRequest request, HttpServletResponse response) throws IOException {
         
         String nombre = request.getParameter("nombre");
-        String facultad = request.getParameter("facultad");
-        String creditosStr = request.getParameter("creditos");
+        String apellidos = request.getParameter("apellidos"); 
+        String departamento = request.getParameter("departamento");
+        String correo = request.getParameter("correo");
         
-        if (nombre == null || nombre.trim().isEmpty()) {
-            response.sendRedirect("ControlTitulaciones?ACTION_ID=LISTAR_TITULACIONES");
-            return; 
-        }
-
-        int creditos = 0;
-        if (creditosStr != null && !creditosStr.isEmpty()) {
-            try {
-                creditos = Integer.parseInt(creditosStr);
-            } catch (NumberFormatException e) {
-                creditos = 0;
-            }
+        if (nombre == null || nombre.trim().isEmpty() || apellidos == null || apellidos.trim().isEmpty()) {
+            response.sendRedirect("ControlProfesores?ACTION_ID=LISTAR_PROFESORES");
+            return;
         }
         
         try {
@@ -42,10 +34,13 @@ public class InsertarTitulacion extends Accion {
             DataSource ds = (DataSource) envCtx.lookup("jdbc/dad2");
             Connection conexion = ds.getConnection();
             
-            PreparedStatement ps = conexion.prepareStatement("INSERT INTO titulaciones (NOMBRE, FACULTAD, CREDITOS) VALUES (?, ?, ?)");
+            PreparedStatement ps = conexion.prepareStatement(
+                "INSERT INTO profesores (NOMBRE, APELLIDOS, DEPARTAMENTO, CORREO) VALUES (?, ?, ?, ?)"
+            );
             ps.setString(1, nombre); 
-            ps.setString(2, facultad);
-            ps.setInt(3, creditos);
+            ps.setString(2, apellidos);
+            ps.setString(3, departamento);
+            ps.setString(4, correo);
             ps.executeUpdate();
             
             ps.close();
@@ -55,6 +50,6 @@ public class InsertarTitulacion extends Accion {
             e.printStackTrace();
         }
         
-        response.sendRedirect("ControlTitulaciones?ACTION_ID=LISTAR_TITULACIONES");
+        response.sendRedirect("ControlProfesores?ACTION_ID=LISTAR_PROFESORES");
     }
 }
