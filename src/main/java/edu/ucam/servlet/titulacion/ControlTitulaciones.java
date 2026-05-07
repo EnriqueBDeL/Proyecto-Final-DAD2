@@ -20,6 +20,7 @@ import edu.ucam.mvc.titulacion.ListarTitulaciones;
 public class ControlTitulaciones extends HttpServlet {
 	
 	private static final long serialVersionUID = 1L;
+	
 	private Hashtable<String, Accion> acciones = null;
   
  
@@ -39,7 +40,7 @@ public class ControlTitulaciones extends HttpServlet {
 		acciones.put("INSERTAR_TITULACION", new InsertarTitulacion());
 		
 		
-		super.init(config);
+		super.init(config); // inicializa la clase padre para guardar el ServletConfig y no perder el acceso al ServletContext.
 	}
 
 	
