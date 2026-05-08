@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 05-05-2026 a las 19:51:26
+-- Tiempo de generación: 05-05-2026 a las 20:25:22
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -55,6 +55,7 @@ CREATE TABLE `titulaciones` (
 --
 
 CREATE TABLE `usuarios` (
+  `ID_USERNAME` int(10) NOT NULL,
   `USERNAME` varchar(50) NOT NULL,
   `PASSWORD` varchar(50) NOT NULL,
   `ROL` varchar(20) NOT NULL
@@ -64,8 +65,8 @@ CREATE TABLE `usuarios` (
 -- Volcado de datos para la tabla `usuarios`
 --
 
-INSERT INTO `usuarios` (`USERNAME`, `PASSWORD`, `ROL`) VALUES
-('admin', 'admin', 'ADMIN');
+INSERT INTO `usuarios` (`ID_USERNAME`, `USERNAME`, `PASSWORD`, `ROL`) VALUES
+(1, '', 'admin', 'ADMIN');
 
 --
 -- Índices para tablas volcadas
@@ -87,7 +88,7 @@ ALTER TABLE `titulaciones`
 -- Indices de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
-  ADD PRIMARY KEY (`USERNAME`);
+  ADD PRIMARY KEY (`ID_USERNAME`);
 
 --
 -- AUTO_INCREMENT de las tablas volcadas
@@ -104,6 +105,12 @@ ALTER TABLE `profesores`
 --
 ALTER TABLE `titulaciones`
   MODIFY `ID` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+
+--
+-- AUTO_INCREMENT de la tabla `usuarios`
+--
+ALTER TABLE `usuarios`
+  MODIFY `ID_USERNAME` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

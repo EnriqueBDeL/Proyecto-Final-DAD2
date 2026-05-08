@@ -27,7 +27,7 @@ public class InsertarTitulacion extends Accion {
             return; 
         }
 
-        int creditos = 0;
+        int creditos = 0; // Pasamos los creditos a int
         if (creditosStr != null && !creditosStr.isEmpty()) {
             try {
                 creditos = Integer.parseInt(creditosStr);
@@ -36,20 +36,26 @@ public class InsertarTitulacion extends Accion {
             }
         }
         
+        
         try {
-            Context initCtx = new InitialContext();
+        	
+            Context initCtx = new InitialContext(); // Configuración para obtener la conexión
             Context envCtx = (Context) initCtx.lookup("java:comp/env");
-            DataSource ds = (DataSource) envCtx.lookup("jdbc/dad2");
+            DataSource ds = (DataSource) envCtx.lookup("jdbc/dad2");// Se obtiene el DataSource configurado en el servidor.
             Connection conexion = ds.getConnection();
             
+            
             PreparedStatement ps = conexion.prepareStatement("INSERT INTO titulaciones (NOMBRE, FACULTAD, CREDITOS) VALUES (?, ?, ?)");
-            ps.setString(1, nombre); 
+            ps.setString(1, nombre); // la base de datos empiea a contar desde 1
             ps.setString(2, facultad);
             ps.setInt(3, creditos);
-            ps.executeUpdate();
+            ps.executeUpdate(); //operación de ESCRITURA (INSERT, UPDATE, DELETE).
             
-            ps.close();
+            
+            // Se liberan los recursos cerrando el PreparedStatement y devolviendo la conexión al pool
+            ps.close(); 
             conexion.close();
+            
             
         } catch (NamingException | SQLException e) {
             e.printStackTrace();

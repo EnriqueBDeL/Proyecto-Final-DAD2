@@ -33,7 +33,7 @@ public class ListarTitulaciones extends Accion {
             Connection conexion = ds.getConnection();
             
             PreparedStatement ps = conexion.prepareStatement("SELECT * FROM titulaciones");
-            ResultSet rs = ps.executeQuery();
+            ResultSet rs = ps.executeQuery(); // operación de LECTURA (SELECT)
             
             while(rs.next()) {
               
