@@ -20,14 +20,10 @@ public class LoginServlet extends HttpServlet {
 
         String username = request.getParameter("username");
         String password = request.getParameter("password");
-        
-        System.out.println("Usuario recibido: " + username);
-        System.out.println("Password recibida: " + password);
-
 
         Usuario usuario = null;
 
-        String sql = "SELECT * FROM usuarios WHERE username = ? AND password = ?";
+        String sql = "SELECT ID_USERNAME, USERNAME, PASSWORD, ROL FROM usuarios WHERE USERNAME = ? AND PASSWORD = ?";
 
         try (Connection conexion = ConexionBD.getConexion();
              PreparedStatement ps = conexion.prepareStatement(sql)) {
@@ -35,15 +31,16 @@ public class LoginServlet extends HttpServlet {
             ps.setString(1, username);
             ps.setString(2, password);
 
-            ResultSet rs = ps.executeQuery();
+            try (ResultSet rs = ps.executeQuery()) {
 
-            if (rs.next()) {
-                usuario = new Usuario(
-                    rs.getInt("ID_USERNAME"),
-                    rs.getString("USERNAME"),
-                    rs.getString("PASSWORD"),
-                    rs.getString("ROL")
-                );
+                if (rs.next()) {
+                    usuario = new Usuario(
+                            rs.getInt("ID_USERNAME"),
+                            rs.getString("USERNAME"),
+                            rs.getString("PASSWORD"),
+                            rs.getString("ROL")
+                    );
+                }
             }
 
         } catch (Exception e) {
@@ -51,11 +48,14 @@ public class LoginServlet extends HttpServlet {
         }
 
         if (usuario != null) {
-            request.getSession().setAttribute("usuario", usuario);
-            response.sendRedirect("secured/listarUsuarios.jsp");
+            HttpSession session = request.getSession(true);
+            session.setAttribute("usuario", usuario);
+
+            response.sendRedirect(request.getContextPath() + "/secured/listarUsuarios.jsp");
+
         } else {
             request.setAttribute("error", "Usuario o contraseña incorrectos");
-            request.getRequestDispatcher("login.jsp").forward(request, response);
+            request.getRequestDispatcher("/login.jsp").forward(request, response);
         }
     }
 }
