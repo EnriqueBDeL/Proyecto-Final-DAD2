@@ -39,10 +39,10 @@ public class LoginServlet extends HttpServlet {
 
             if (rs.next()) {
                 usuario = new Usuario(
-                    rs.getInt("idUsuario"),
-                    rs.getString("username"),
-                    rs.getString("password"),
-                    rs.getString("rol")
+                    rs.getInt("ID_USERNAME"),
+                    rs.getString("USERNAME"),
+                    rs.getString("PASSWORD"),
+                    rs.getString("ROL")
                 );
             }
 
