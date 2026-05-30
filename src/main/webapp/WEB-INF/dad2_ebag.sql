@@ -48,6 +48,22 @@ CREATE TABLE `titulaciones` (
   `CREDITOS` int(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+-- ------------------------------------------------------------
+-- Tabla: asignaturas
+-- Relacionada con titulaciones y profesores
+-- ------------------------------------------------------------
+DROP TABLE IF EXISTS `asignaturas`;
+CREATE TABLE `asignaturas` (
+    `ID`            int(10)      NOT NULL AUTO_INCREMENT,
+    `NOMBRE`        varchar(150) NOT NULL,
+    `MAX_CAPACIDAD` int(10)      NOT NULL DEFAULT 0,
+    `ID_TITULACION` int(10)      DEFAULT NULL,
+    `ID_PROFESOR`   int(10)      DEFAULT NULL,
+    PRIMARY KEY (`ID`),
+    FOREIGN KEY (`ID_TITULACION`) REFERENCES `titulaciones`(`ID`) ON DELETE SET NULL,
+    FOREIGN KEY (`ID_PROFESOR`)   REFERENCES `profesores`(`ID`)   ON DELETE SET NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
 -- --------------------------------------------------------
 
 --
