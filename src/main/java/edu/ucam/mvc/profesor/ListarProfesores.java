@@ -4,13 +4,9 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.Hashtable;
-import javax.naming.Context;
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
-import javax.sql.DataSource;
 
+import edu.ucam.bd.ConexionBD; 
 import edu.ucam.domain.Profesor;
 import edu.ucam.mvc.Accion;
 import jakarta.servlet.ServletException;
@@ -24,14 +20,10 @@ public class ListarProfesores extends Accion {
         
         Hashtable<String, Profesor> profesores = new Hashtable<String, Profesor>();
         
-        try {
-            Context initCtx = new InitialContext();
-            Context envCtx = (Context) initCtx.lookup("java:comp/env");
-            DataSource ds = (DataSource) envCtx.lookup("jdbc/dad2");
-            Connection conexion = ds.getConnection();
-            
-            PreparedStatement ps = conexion.prepareStatement("SELECT * FROM profesores");
-            ResultSet rs = ps.executeQuery();
+      
+        try (Connection conexion = ConexionBD.getConexion();
+             PreparedStatement ps = conexion.prepareStatement("SELECT * FROM profesores");
+             ResultSet rs = ps.executeQuery()) {
 
             while(rs.next()) {
                 Profesor p = new Profesor(
@@ -43,12 +35,9 @@ public class ListarProfesores extends Accion {
                 );
                 profesores.put(rs.getString("ID"), p);               
             }
-
-            rs.close();
-            ps.close();
-            conexion.close();
             
-        } catch (NamingException | SQLException e) {
+
+        } catch (Exception e) { 
             e.printStackTrace();
         }
         
