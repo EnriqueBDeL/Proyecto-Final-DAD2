@@ -105,7 +105,7 @@ CREATE TABLE `usuarios` (
 --
 
 INSERT INTO `usuarios` (`ID_USERNAME`, `USERNAME`, `PASSWORD`, `ROL`) VALUES
-(1, '', 'admin', 'ADMIN'),
+(1, 'admin', 'admin', 'ADMIN'),
 (2, 'jdirector', '12345', 'ADMIN'),
 (3, 'luis_alumno', 'secreta', 'USER');
 
