@@ -16,8 +16,8 @@
 	<input type="hidden" name="ACTION_ID" value="INSERTAR_TITULACION">
 	
 	Nombre:   <input type="text" name="nombre" required><br>
-	Facultad: <input type="text" name="facultad"><br>
-	Créditos: <input type="number" name="creditos"><br>
+	Facultad: <input type="text" name="facultad" required><br>
+	Créditos: <input type="number" name="creditos" required><br>
 	
 	<input type="submit" value="Guardar">
 </form>
@@ -43,6 +43,9 @@
         out.print("<br><b>No hay titulaciones registradas en la base de datos en este momento.</b>");
     }
 %>
+
+<br><br>
+<a href="menuUsuario.jsp">Volver al Menú Principal</a>
 
 </body>
 </html>

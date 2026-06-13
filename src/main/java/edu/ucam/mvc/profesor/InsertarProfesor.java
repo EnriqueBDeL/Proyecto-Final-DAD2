@@ -19,7 +19,7 @@ public class InsertarProfesor extends Accion {
         String departamento = request.getParameter("departamento");
         String correo = request.getParameter("correo");
         
-        if (nombre == null || nombre.trim().isEmpty() || apellidos == null || apellidos.trim().isEmpty()) {
+        if (nombre == null || nombre.trim().isEmpty() || apellidos == null || apellidos.trim().isEmpty() || departamento == null || departamento.trim().isEmpty() || correo == null || correo.trim().isEmpty()) {
             response.sendRedirect("ControlProfesores?ACTION_ID=LISTAR_PROFESORES");
             return;
         }

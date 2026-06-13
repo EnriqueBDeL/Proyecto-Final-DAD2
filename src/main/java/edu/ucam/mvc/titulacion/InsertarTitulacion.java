@@ -18,7 +18,7 @@ public class InsertarTitulacion extends Accion {
         String facultad = request.getParameter("facultad");
         String creditosStr = request.getParameter("creditos");
         
-        if (nombre == null || nombre.trim().isEmpty()) {
+        if (nombre == null || nombre.trim().isEmpty() || facultad == null || facultad.trim().isEmpty() || creditosStr == null || creditosStr.trim().isEmpty()) {
             response.sendRedirect("ControlTitulaciones?ACTION_ID=LISTAR_TITULACIONES");
             return; 
         }

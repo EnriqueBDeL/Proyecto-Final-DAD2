@@ -17,8 +17,8 @@
 	
 	Nombre:       <input type="text" name="nombre" required><br>
 	Apellidos:    <input type="text" name="apellidos" required><br>
-	Departamento: <input type="text" name="departamento"><br>
-	Correo:       <input type="email" name="correo"><br>
+	Departamento: <input type="text" name="departamento" required><br>
+	Correo:       <input type="email" name="correo" required><br>
 	
 	<input type="submit" value="Guardar">
 </form>
@@ -45,6 +45,9 @@
         out.print("<br><b>No hay profesores registrados en la base de datos en este momento.</b>");
     }
 %>
+
+<br><br>
+<a href="menuUsuario.jsp">Volver al Menú Principal</a>
 
 </body>
 </html>

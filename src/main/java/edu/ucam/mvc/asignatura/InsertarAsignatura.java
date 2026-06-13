@@ -15,7 +15,7 @@ public class InsertarAsignatura extends Accion {
         String idTitulacion = request.getParameter("idTitulacion");
         String idProfesor = request.getParameter("idProfesor"); 
 
-        if (nombre == null || nombre.trim().isEmpty()) {
+        if (nombre == null || nombre.trim().isEmpty() || capacidadStr == null || capacidadStr.trim().isEmpty()) {
             response.sendRedirect("ControlAsignaturas?ACTION_ID=LISTAR_ASIGNATURAS");
             return;
         }
