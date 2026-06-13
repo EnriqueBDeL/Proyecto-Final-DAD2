@@ -51,7 +51,11 @@ public class LoginServlet extends HttpServlet {
             HttpSession session = request.getSession(true);
             session.setAttribute("usuario", usuario);
 
-            response.sendRedirect(request.getContextPath() + "/secured/listarUsuarios.jsp");
+            if (usuario.isAdmin()) {
+                response.sendRedirect(request.getContextPath() + "/secured/admin/menuAdmin.jsp");
+            } else {
+                response.sendRedirect(request.getContextPath() + "/secured/menuUsuario.jsp");
+            }
 
         } else {
             request.setAttribute("error", "Usuario o contraseña incorrectos");

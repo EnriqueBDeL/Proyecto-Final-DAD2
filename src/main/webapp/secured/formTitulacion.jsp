@@ -27,6 +27,7 @@
 <h2>Lista de titulaciones:</h2>
     
 <%
+	@SuppressWarnings("unchecked")
     Hashtable<String, Titulacion> registro = (Hashtable<String, Titulacion>) request.getAttribute("TITULACIONES");
 
     if (registro != null && !registro.isEmpty()) {

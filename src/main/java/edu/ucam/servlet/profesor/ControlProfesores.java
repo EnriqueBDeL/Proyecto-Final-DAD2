@@ -15,7 +15,7 @@ import edu.ucam.mvc.profesor.EditarProfesor;
 import edu.ucam.mvc.profesor.InsertarProfesor;
 import edu.ucam.mvc.profesor.ListarProfesores;
 
-@WebServlet("/ControlProfesores")
+@WebServlet("/secured/ControlProfesores") 
 public class ControlProfesores extends HttpServlet {
 	
 	private static final long serialVersionUID = 1L;
@@ -27,35 +27,34 @@ public class ControlProfesores extends HttpServlet {
     
 	@Override
 	public void init(ServletConfig config) throws ServletException {
-		
 		acciones = new Hashtable<String, Accion>();
-		
 		acciones.put("BORRAR_PROFESOR", new BorrarProfesor());
 		acciones.put("EDITAR_PROFESOR", new EditarProfesor());
 		acciones.put("LISTAR_PROFESORES", new ListarProfesores());
 		acciones.put("INSERTAR_PROFESOR", new InsertarProfesor());
-		
 		super.init(config);
 	}
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        despachar(request, response);
+    }
 
-		String paramActionId = request.getParameter("ACTION_ID");
-		
-		if (paramActionId == null) {
-			System.out.println("No se introdujo ninguna acción.");
-		} else {
-			Accion accion = acciones.get(paramActionId);
-			
-			if (accion != null) {
-				accion.ejecutar(request, response);
-			} else {
-				response.getWriter().append("Error: Acción '" + paramActionId + "' no reconocida.");
-			}
-		}
-	}
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        despachar(request, response);
+    }
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doGet(request, response);
-	}
+    private void despachar(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        String actionId = request.getParameter("ACTION_ID");
+        if (actionId == null) actionId = "LISTAR_PROFESORES";
+        
+        Accion accion = acciones.get(actionId);
+        if (accion != null) {
+            accion.ejecutar(request, response);
+        } else {
+            try { response.getWriter().println("Acción desconocida: " + actionId); }
+            catch (Exception e) { e.printStackTrace(); }
+        }
+    }
 }
