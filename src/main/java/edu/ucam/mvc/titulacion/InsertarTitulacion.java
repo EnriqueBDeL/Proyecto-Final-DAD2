@@ -3,12 +3,8 @@ package edu.ucam.mvc.titulacion;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import javax.naming.Context;
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
-import javax.sql.DataSource;
 
+import edu.ucam.bd.ConexionBD;
 import edu.ucam.mvc.Accion;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -36,28 +32,15 @@ public class InsertarTitulacion extends Accion {
             }
         }
         
-        
-        try {
-        	
-            Context initCtx = new InitialContext(); // Configuración para obtener la conexión
-            Context envCtx = (Context) initCtx.lookup("java:comp/env");
-            DataSource ds = (DataSource) envCtx.lookup("jdbc/dad2");// Se obtiene el DataSource configurado en el servidor.
-            Connection conexion = ds.getConnection();
+        try (Connection conexion = ConexionBD.getConexion();
+             PreparedStatement ps = conexion.prepareStatement("INSERT INTO titulaciones (NOMBRE, FACULTAD, CREDITOS) VALUES (?, ?, ?)")) {
             
-            
-            PreparedStatement ps = conexion.prepareStatement("INSERT INTO titulaciones (NOMBRE, FACULTAD, CREDITOS) VALUES (?, ?, ?)");
-            ps.setString(1, nombre); // la base de datos empiea a contar desde 1
+            ps.setString(1, nombre); 
             ps.setString(2, facultad);
             ps.setInt(3, creditos);
-            ps.executeUpdate(); //operación de ESCRITURA (INSERT, UPDATE, DELETE).
+            ps.executeUpdate(); 
             
-            
-            // Se liberan los recursos cerrando el PreparedStatement y devolviendo la conexión al pool
-            ps.close(); 
-            conexion.close();
-            
-            
-        } catch (NamingException | SQLException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         
