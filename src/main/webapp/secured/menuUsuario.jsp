@@ -2,11 +2,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
 <%
-    // Recuperamos el usuario de la sesión
-    Usuario usuarioLogado = (Usuario) session.getAttribute("usuario");
+
+	Usuario usuarioLogado = (Usuario) session.getAttribute("usuario");
     String nombre = "";
 
-    // Usamos el if-else clásico para decidir qué nombre mostrar
     if (usuarioLogado != null) {
         nombre = usuarioLogado.getUsername();
     } else {

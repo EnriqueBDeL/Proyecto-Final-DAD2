@@ -14,30 +14,76 @@
 
 <%
     String idEditar = request.getParameter("idEditar");
-    boolean editando = idEditar != null;
+    
+    boolean editando;
+    if (idEditar != null) {
+        editando = true;
+    } else {
+        editando = false;
+    }
+    
     Usuario usuario = (Usuario) session.getAttribute("usuario");
+
+    String tituloFormulario;
+    String accionFormulario;
+    String textoBoton;
+    String valorNombre;
+    String valorFacultad;
+    String valorCreditos;
+
+    if (editando) {
+        tituloFormulario = "Editar Titulación";
+        accionFormulario = "EDITAR_TITULACION";
+        textoBoton = "Guardar cambios";
+        
+        if (request.getParameter("nombre") != null) {
+            valorNombre = request.getParameter("nombre");
+        } else {
+            valorNombre = "";
+        }
+        
+        if (request.getParameter("facultad") != null) {
+            valorFacultad = request.getParameter("facultad");
+        } else {
+            valorFacultad = "";
+        }
+        
+        if (request.getParameter("creditos") != null) {
+            valorCreditos = request.getParameter("creditos");
+        } else {
+            valorCreditos = "";
+        }
+        
+    } else {
+        tituloFormulario = "Añadir Titulación";
+        accionFormulario = "INSERTAR_TITULACION";
+        textoBoton = "Guardar";
+        valorNombre = "";
+        valorFacultad = "";
+        valorCreditos = "";
+    }
 %>
 
-<h1><%= editando ? "Editar Titulacion" : "Añadir Titulacion" %></h1>
+<h1><%= tituloFormulario %></h1>
 
 <form action="ControlTitulaciones" method="POST">
-    <input type="hidden" name="ACTION_ID"
-           value="<%= editando ? "EDITAR_TITULACION" : "INSERTAR_TITULACION" %>">
+    <input type="hidden" name="ACTION_ID" value="<%= accionFormulario %>">
            
-     <% if (editando) { %>
+    <% if (editando) { %>
         <input type="hidden" name="id" value="<%= idEditar %>">
     <% } %>
 	
-	Nombre: <input type="text" name="nombre"
-           value="<%= editando ? request.getParameter("nombre") : "" %>" required><br>
+	Nombre: <input type="text" name="nombre" value="<%= valorNombre %>" required><br>
            
-	Facultad: <input type="text" name="facultad"
-           value="<%= editando ? request.getParameter("facultad") : "" %>" required><br>
+	Facultad: <input type="text" name="facultad" value="<%= valorFacultad %>" required><br>
            
-	Créditos: <input type="number" name="creditos" 
-			value="<%= editando ? request.getParameter("creditos") : "" %>"  required><br>
+	Créditos: <input type="number" name="creditos" value="<%= valorCreditos %>" required><br>
 	
-	<input type="submit" value="Guardar">
+	<input type="submit" value="<%= textoBoton %>">
+
+    <% if (editando) { %>
+        <a href="ControlTitulaciones?ACTION_ID=LISTAR_TITULACIONES">Cancelar</a>
+    <% } %>
 </form>
 
 <br><br>

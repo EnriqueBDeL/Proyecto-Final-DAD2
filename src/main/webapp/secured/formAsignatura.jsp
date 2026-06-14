@@ -7,12 +7,21 @@
 <%@ page import="java.net.URLEncoder"%>
 
 <%!
-    private String valor(String texto) {
-        return texto == null ? "" : texto;
+
+	private String valor(String texto) {
+        if (texto == null) {
+            return "";
+        } else {
+            return texto;
+        }
     }
 
     private String selected(String actual, String esperado) {
-        return valor(actual).equals(valor(esperado)) ? "selected" : "";
+        if (valor(actual).equals(valor(esperado))) {
+            return "selected";
+        } else {
+            return "";
+        }
     }
 %>
 
@@ -35,32 +44,55 @@
     List<Profesor> profesores = (List<Profesor>) request.getAttribute("PROFESORES");
 
     String idEditar = request.getParameter("idEditar");
-    boolean editando = idEditar != null;
+    
+    boolean editando;
+    if (idEditar != null) {
+        editando = true;
+    } else {
+        editando = false;
+    }
 
     String nombreEditar = request.getParameter("nombre");
     String capacidadEditar = request.getParameter("maxCapacidad");
     String idTitulacionEditar = request.getParameter("idTitulacion");
     String idProfesorEditar = request.getParameter("idProfesor");
     Usuario usuario = (Usuario) session.getAttribute("usuario");
+
+    String tituloFormulario;
+    String accionFormulario;
+    String textoBoton;
+    String valorNombre;
+    String valorCapacidad;
+
+    if (editando) {
+        tituloFormulario = "Editar Asignatura";
+        accionFormulario = "EDITAR_ASIGNATURA";
+        textoBoton = "Guardar cambios";
+        valorNombre = valor(nombreEditar);
+        valorCapacidad = valor(capacidadEditar);
+    } else {
+        tituloFormulario = "Añadir Asignatura";
+        accionFormulario = "INSERTAR_ASIGNATURA";
+        textoBoton = "Guardar";
+        valorNombre = "";
+        valorCapacidad = "";
+    }
 %>
 
-<h1><%= editando ? "Editar Asignatura" : "Añadir Asignatura" %></h1>
+<h1><%= tituloFormulario %></h1>
 
 <form action="ControlAsignaturas" method="POST">
-    <input type="hidden" name="ACTION_ID"
-           value="<%= editando ? "EDITAR_ASIGNATURA" : "INSERTAR_ASIGNATURA" %>">
+    <input type="hidden" name="ACTION_ID" value="<%= accionFormulario %>">
 
     <% if (editando) { %>
         <input type="hidden" name="id" value="<%= idEditar %>">
     <% } %>
 
     Nombre:
-    <input type="text" name="nombre"
-           value="<%= editando ? valor(nombreEditar) : "" %>" required><br>
+    <input type="text" name="nombre" value="<%= valorNombre %>" required><br>
 
     Capacidad:
-    <input type="number" name="maxCapacidad"
-           value="<%= editando ? valor(capacidadEditar) : "" %>" required min="1"><br>
+    <input type="number" name="maxCapacidad" value="<%= valorCapacidad %>" required min="1"><br>
 
     Titulación:
     <select name="idTitulacion" required>
@@ -69,8 +101,7 @@
         <% if (titulaciones != null) {
             for (Titulacion t : titulaciones) { %>
 
-                <option value="<%= t.getIdTitulacion() %>"
-                    <%= selected(idTitulacionEditar, t.getIdTitulacion()) %>>
+                <option value="<%= t.getIdTitulacion() %>" <%= selected(idTitulacionEditar, t.getIdTitulacion()) %>>
                     <%= t.getNombre() %>
                 </option>
 
@@ -83,10 +114,17 @@
 		    <option value="">-- Sin Profesor --</option>
 		
 		    <% if (profesores != null) {
-		        for (Profesor p : profesores) { %>
+		        for (Profesor p : profesores) { 
+                    
+                    String seleccionadoProfesor;
+                    if (editando && p.getIdProfesor().equals(request.getParameter("idProfesor"))) {
+                        seleccionadoProfesor = "selected";
+                    } else {
+                        seleccionadoProfesor = "";
+                    }
+            %>
 		
-		            <option value="<%= p.getIdProfesor() %>"
-		                <%= editando && p.getIdProfesor().equals(request.getParameter("idProfesor")) ? "selected" : "" %>>
+		            <option value="<%= p.getIdProfesor() %>" <%= seleccionadoProfesor %>>
 		                <%= p.getApellidos() %>, <%= p.getNombre() %>
 		            </option>
 		
@@ -94,7 +132,7 @@
 		       } %>
 		</select><br>
 
-    <input type="submit" value="<%= editando ? "Guardar cambios" : "Guardar" %>">
+    <input type="submit" value="<%= textoBoton %>">
 
     <% if (editando) { %>
         <a href="ControlAsignaturas?ACTION_ID=LISTAR_ASIGNATURAS">Cancelar</a>
@@ -108,11 +146,34 @@
 <%
 if (asignaturas != null && !asignaturas.isEmpty()) {
     for (Asignatura a : asignaturas) {
-        String nombreTitulacion = a.getNombreTitulacion() != null ? a.getNombreTitulacion() : "Sin asignar";
-        String nombreProfesor = a.getNombreProfesor() != null ? a.getNombreProfesor() : "Sin asignar";
+        
+        String nombreTitulacion;
+        if (a.getNombreTitulacion() != null) {
+            nombreTitulacion = a.getNombreTitulacion();
+        } else {
+            nombreTitulacion = "Sin asignar";
+        }
 
-        String idTitulacion = a.getIdTitulacion() != null ? a.getIdTitulacion() : "";
-        String idProfesor = a.getIdProfesor() != null ? a.getIdProfesor() : "";
+        String nombreProfesor;
+        if (a.getNombreProfesor() != null) {
+            nombreProfesor = a.getNombreProfesor();
+        } else {
+            nombreProfesor = "Sin asignar";
+        }
+
+        String idTitulacion;
+        if (a.getIdTitulacion() != null) {
+            idTitulacion = a.getIdTitulacion();
+        } else {
+            idTitulacion = "";
+        }
+
+        String idProfesor;
+        if (a.getIdProfesor() != null) {
+            idProfesor = a.getIdProfesor();
+        } else {
+            idProfesor = "";
+        }
 
         out.println("<br><b>" + a.getIdAsignatura() + " - " + a.getNombre() + "</b>");
         out.println(" | Titulación: " + nombreTitulacion + " | Capacidad: " + a.getMaxCapacidad());
