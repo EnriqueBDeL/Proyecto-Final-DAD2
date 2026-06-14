@@ -2,6 +2,7 @@
 <%@ page import="edu.ucam.domain.Asignatura"%>
 <%@ page import="edu.ucam.domain.Titulacion"%>
 <%@ page import="edu.ucam.domain.Profesor"%>
+<%@ page import="edu.ucam.domain.Usuario" %>
 <%@ page import="java.util.List"%>
 <%@ page import="java.net.URLEncoder"%>
 
@@ -40,6 +41,7 @@
     String capacidadEditar = request.getParameter("maxCapacidad");
     String idTitulacionEditar = request.getParameter("idTitulacion");
     String idProfesorEditar = request.getParameter("idProfesor");
+    Usuario usuario = (Usuario) session.getAttribute("usuario");
 %>
 
 <h1><%= editando ? "Editar Asignatura" : "Añadir Asignatura" %></h1>
@@ -129,7 +131,17 @@ if (asignaturas != null && !asignaturas.isEmpty()) {
 %>
 
 <br><br>
-<a href="menuUsuario.jsp">Volver al Menú Principal</a>
+<%
+    String enlaceMenu;
+
+    if (usuario.isAdmin()) {
+        enlaceMenu = request.getContextPath() + "/secured/admin/menuAdmin.jsp";
+    } else {
+        enlaceMenu = request.getContextPath() + "/secured/menuUsuario.jsp";
+    }
+%>
+
+<a href="<%= enlaceMenu %>">Volver al Menú Principal</a>
 
 </body>
 </html>

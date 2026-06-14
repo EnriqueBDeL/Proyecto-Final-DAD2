@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="edu.ucam.domain.Titulacion"%>
+<%@ page import="edu.ucam.domain.Usuario" %>
 <%@ page import="java.util.Hashtable"%>
 <%@ page import="java.net.URLEncoder"%>
     
@@ -14,6 +15,7 @@
 <%
     String idEditar = request.getParameter("idEditar");
     boolean editando = idEditar != null;
+    Usuario usuario = (Usuario) session.getAttribute("usuario");
 %>
 
 <h1><%= editando ? "Editar Titulacion" : "Añadir Titulacion" %></h1>
@@ -62,7 +64,17 @@
 %>
 
 <br><br>
-<a href="menuUsuario.jsp">Volver al Menú Principal</a>
+<%
+    String enlaceMenu;
+
+    if (usuario.isAdmin()) {
+        enlaceMenu = request.getContextPath() + "/secured/admin/menuAdmin.jsp";
+    } else {
+        enlaceMenu = request.getContextPath() + "/secured/menuUsuario.jsp";
+    }
+%>
+
+<a href="<%= enlaceMenu %>">Volver al Menú Principal</a>
 
 </body>
 </html>
