@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="edu.ucam.domain.Titulacion"%>
 <%@ page import="java.util.Hashtable"%>
+<%@ page import="java.net.URLEncoder"%>
     
 <!DOCTYPE html>
 <html>
@@ -10,14 +11,29 @@
 </head>
 <body>
 
-<h1>Añadir Titulación</h1>
+<%
+    String idEditar = request.getParameter("idEditar");
+    boolean editando = idEditar != null;
+%>
+
+<h1><%= editando ? "Editar Titulacion" : "Añadir Titulacion" %></h1>
 
 <form action="ControlTitulaciones" method="POST">
-	<input type="hidden" name="ACTION_ID" value="INSERTAR_TITULACION">
+    <input type="hidden" name="ACTION_ID"
+           value="<%= editando ? "EDITAR_TITULACION" : "INSERTAR_TITULACION" %>">
+           
+     <% if (editando) { %>
+        <input type="hidden" name="id" value="<%= idEditar %>">
+    <% } %>
 	
-	Nombre:   <input type="text" name="nombre" required><br>
-	Facultad: <input type="text" name="facultad" required><br>
-	Créditos: <input type="number" name="creditos" required><br>
+	Nombre: <input type="text" name="nombre"
+           value="<%= editando ? request.getParameter("nombre") : "" %>" required><br>
+           
+	Facultad: <input type="text" name="facultad"
+           value="<%= editando ? request.getParameter("facultad") : "" %>" required><br>
+           
+	Créditos: <input type="number" name="creditos" 
+			value="<%= editando ? request.getParameter("creditos") : "" %>"  required><br>
 	
 	<input type="submit" value="Guardar">
 </form>
@@ -36,6 +52,7 @@
             out.println(" | Facultad: " + t.getFacultad() + " | Créditos: " + t.getCreditos());
             
             %>
+            <a href="ControlTitulaciones?ACTION_ID=LISTAR_TITULACIONES&idEditar=<%= t.getIdTitulacion() %>&nombre=<%= URLEncoder.encode(t.getNombre(), "UTF-8") %>&facultad=<%= URLEncoder.encode(t.getFacultad(), "UTF-8") %>&creditos=<%= URLEncoder.encode(String.valueOf(t.getCreditos()), "UTF-8") %>">[Editar]</a>
             <a href="ControlTitulaciones?ACTION_ID=BORRAR_TITULACION&id=<%= t.getIdTitulacion() %>">[Borrar]</a>  
             <%
         }

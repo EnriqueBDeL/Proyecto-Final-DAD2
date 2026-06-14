@@ -26,20 +26,16 @@
         <input type="hidden" name="id" value="<%= idEditar %>">
     <% } %>
 
-    Nombre:
-    <input type="text" name="nombre"
+    Nombre: <input type="text" name="nombre"
            value="<%= editando ? request.getParameter("nombre") : "" %>" required><br>
 
-    Apellidos:
-    <input type="text" name="apellidos"
+    Apellidos: <input type="text" name="apellidos"
            value="<%= editando ? request.getParameter("apellidos") : "" %>" required><br>
 
-    Departamento:
-    <input type="text" name="departamento"
+    Departamento: <input type="text" name="departamento"
            value="<%= editando ? request.getParameter("departamento") : "" %>" required><br>
 
-    Correo:
-    <input type="email" name="correo"
+    Correo: <input type="email" name="correo"
            value="<%= editando ? request.getParameter("correo") : "" %>" required><br>
 
     <input type="submit" value="<%= editando ? "Guardar cambios" : "Guardar" %>">

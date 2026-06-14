@@ -15,6 +15,7 @@ public class EditarAsignatura extends Accion {
         String nombre = request.getParameter("nombre");
         String capacidadStr = request.getParameter("maxCapacidad");
         String idTitulacion = request.getParameter("idTitulacion");
+        String idProfesor = request.getParameter("idProfesor");
 
         if (id == null || nombre == null || nombre.trim().isEmpty()) {
             response.sendRedirect("ControlAsignaturas?ACTION_ID=LISTAR_ASIGNATURAS");
@@ -22,20 +23,34 @@ public class EditarAsignatura extends Accion {
         }
 
         int capacidad = 0;
-        try { capacidad = Integer.parseInt(capacidadStr); } catch (Exception e) { capacidad = 0; }
+        try { 
+            capacidad = Integer.parseInt(capacidadStr); 
+        } catch (Exception e) { 
+            capacidad = 0; 
+        }
 
         try (Connection conexion = ConexionBD.getConexion();
              PreparedStatement ps = conexion.prepareStatement(
-                 "UPDATE asignaturas SET NOMBRE=?, MAX_CAPACIDAD=?, ID_TITULACION=? WHERE ID=?")) {
+                 "UPDATE asignaturas SET NOMBRE=?, MAX_CAPACIDAD=?, ID_TITULACION=?, ID_PROFESOR=? WHERE ID=?")) {
+
             ps.setString(1, nombre.trim());
             ps.setInt(2, capacidad);
+
             if (idTitulacion != null && !idTitulacion.isEmpty()) {
                 ps.setString(3, idTitulacion);
             } else {
                 ps.setNull(3, Types.INTEGER);
             }
-            ps.setString(4, id);
+
+            if (idProfesor != null && !idProfesor.isEmpty()) {
+                ps.setString(4, idProfesor);
+            } else {
+                ps.setNull(4, Types.INTEGER);
+            }
+
+            ps.setString(5, id);
             ps.executeUpdate();
+
         } catch (Exception e) {
             e.printStackTrace();
         }
