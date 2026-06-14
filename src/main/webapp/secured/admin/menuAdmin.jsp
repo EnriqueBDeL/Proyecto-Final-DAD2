@@ -1,9 +1,8 @@
-<%@ page import="edu.ucam.domain.Usuario" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import="edu.ucam.domain.Usuario" %>
 
 <%
-
-	Usuario usuarioLogado = (Usuario) session.getAttribute("usuario");
+    Usuario usuarioLogado = (Usuario) session.getAttribute("usuario");
     String nombre = "";
 
     if (usuarioLogado != null) {
@@ -29,7 +28,6 @@
     <p>¿Qué deseas gestionar?</p>
     <ul>
         <li><a href="ControlUsuarios?ACTION_ID=LISTAR_USUARIOS"><b>Gestión de Usuarios (Exclusivo Admin)</b></a></li>
-        
         <li><a href="../ControlProfesores?ACTION_ID=LISTAR_PROFESORES">Gestión de Profesores</a></li>
         <li><a href="../ControlTitulaciones?ACTION_ID=LISTAR_TITULACIONES">Gestión de Titulaciones</a></li>
         <li><a href="../ControlAsignaturas?ACTION_ID=LISTAR_ASIGNATURAS">Gestión de Asignaturas</a></li>

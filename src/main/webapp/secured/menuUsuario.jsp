@@ -1,9 +1,8 @@
-<%@ page import="edu.ucam.domain.Usuario" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import="edu.ucam.domain.Usuario" %>
 
 <%
-
-	Usuario usuarioLogado = (Usuario) session.getAttribute("usuario");
+    Usuario usuarioLogado = (Usuario) session.getAttribute("usuario");
     String nombre = "";
 
     if (usuarioLogado != null) {
