@@ -18,8 +18,10 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Base de datos: `dad2_ebag`
+-- Base de datos: `dad2_tuDNI`
 --
+CREATE DATABASE IF NOT EXISTS `dad2_tuDNI` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+USE `dad2_tuDNI`;
 
 -- --------------------------------------------------------
 
