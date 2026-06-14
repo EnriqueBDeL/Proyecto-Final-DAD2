@@ -37,7 +37,7 @@
     </ul>
 
     <br><br>
-    <a href="../../login.jsp" style="color: red;">[ Cerrar Sesión ]</a>
+    <a href="${pageContext.request.contextPath}/LogoutServlet" style="color: red;">[ Cerrar Sesión ]</a>
 
 </body>
 </html>
