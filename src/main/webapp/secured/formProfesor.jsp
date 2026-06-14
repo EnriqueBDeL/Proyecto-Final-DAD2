@@ -74,6 +74,17 @@
 
 <h1><%= tituloFormulario %></h1>
 
+<% 
+    String error = request.getParameter("error");
+    if (error != null) {
+        if (error.equals("tiene_asignaturas")) {
+%>
+            <p style="color: red; font-weight: bold;">No se puede borrar este profesor porque tiene asignaturas impartidas. Por favor, modifique o borre sus asignaturas primero. </p>
+<% 
+        }
+    } 
+%>
+
 <form action="ControlProfesores" method="POST">
     <input type="hidden" name="ACTION_ID" value="<%= accionFormulario %>">
 

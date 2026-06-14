@@ -66,6 +66,17 @@
 
 <h1><%= tituloFormulario %></h1>
 
+<% 
+    String error = request.getParameter("error");
+    if (error != null) {
+        if (error.equals("tiene_asignaturas")) {
+%>
+            <p style="color: red; font-weight: bold;">No se puede borrar esta titulación porque tiene asignaturas en su plan de estudios. Por favor, elimínelas primero.</p>
+<% 
+        }
+    } 
+%>
+
 <form action="ControlTitulaciones" method="POST">
     <input type="hidden" name="ACTION_ID" value="<%= accionFormulario %>">
            
