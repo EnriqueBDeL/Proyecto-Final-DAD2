@@ -10,7 +10,7 @@
 ![GitKraken](https://img.shields.io/badge/GitKraken-179287?style=for-the-badge&logo=gitkraken&logoColor=white)
 ![MySQL](https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=mysql&logoColor=white)
 ![MVC](https://img.shields.io/badge/Patrón-MVC-blue?style=for-the-badge)
-![Status](https://img.shields.io/badge/Status-En_desarrollo-orange?style=for-the-badge)
+![Status](https://img.shields.io/badge/Status-Completado-green?style=for-the-badge)
 <br>
 
 <p align="center">
